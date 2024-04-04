@@ -13,6 +13,8 @@ class IEnemyInterface;
 class UAuraInputConfig;
 struct FGameplayTag;
 class UAuraAbilitySystemComponent;
+class UDamageTextComponent;
+class ACharacter;
 
 UCLASS()
 class AURA_API AAuraPlayerController : public APlayerController
@@ -23,12 +25,16 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Input")
 	TObjectPtr<UInputMappingContext> AuraContext;
 
-	UPROPERTY(EditAnywhere, Category = "Input")
-	TObjectPtr<UInputAction> MoveAction;
-	
 	IEnemyInterface* LastActor;
 	IEnemyInterface* CurrentActor;
 	FHitResult CursorHitResult;
+
+
+	UPROPERTY(EditAnywhere, Category = "Input")
+	TObjectPtr<UInputAction> MoveAction;
+
+	UPROPERTY(EditAnywhere, Category = "Input")
+	TObjectPtr<UInputAction> ShiftAction;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
 	TObjectPtr<UAuraInputConfig> InputConfig;
@@ -51,10 +57,18 @@ private:
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<class USplineComponent> Spline;
 
+	bool bShiftKeyDown = false;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<UDamageTextComponent> DamageTextComponentClass;
+
 public:
 	AAuraPlayerController();
 
 	virtual void PlayerTick(float DeltaTime) override;
+
+	UFUNCTION(Client, Reliable)
+	void ShowDamageNumber(float DamageAmount, ACharacter* TargetCharacter, bool bBlockedHit, bool bCriticalHit);
 
 protected:
 	virtual void BeginPlay() override;
@@ -71,5 +85,8 @@ private:
 
 	UAuraAbilitySystemComponent* GetASC();
 	
+	void ShiftPressed() { bShiftKeyDown = true; }
+	void ShiftReleased() { bShiftKeyDown = false; }
+
 	void AutoRun();
 };

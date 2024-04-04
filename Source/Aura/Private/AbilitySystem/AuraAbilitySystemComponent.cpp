@@ -6,6 +6,13 @@
 #include "AuraGameplayTags.h"
 #include "AbilitySystem/Abilities/AuraGameplayAbility.h"
 
+
+void UAuraAbilitySystemComponent::BeginPlay()
+{
+	Super::BeginPlay();
+}
+
+
 void UAuraAbilitySystemComponent::AbilityActorInfoSet()
 {
 	OnGameplayEffectAppliedDelegateToSelf.AddUObject(this, &UAuraAbilitySystemComponent::ClientEffectAplied);
@@ -59,11 +66,6 @@ void UAuraAbilitySystemComponent::AbilityInputTagReleased(const FGameplayTag& In
 	}
 }
 
-
-void UAuraAbilitySystemComponent::BeginPlay()
-{
-	Super::BeginPlay();
-}
 
 void UAuraAbilitySystemComponent::ClientEffectAplied_Implementation(UAbilitySystemComponent* AbilitySystemComponent, const FGameplayEffectSpec& EffectSpec, 
 	FActiveGameplayEffectHandle ActiveEffectHandle)

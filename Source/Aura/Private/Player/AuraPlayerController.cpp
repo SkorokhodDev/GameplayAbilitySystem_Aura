@@ -14,6 +14,8 @@
 #include <AbilitySystemBlueprintLibrary.h>
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
 #include "AuraGameplayTags.h"
+#include "UI/Widget/DamageTextComponent.h"
+#include "GameFramework/Character.h"
 
 
 AAuraPlayerController::AAuraPlayerController()
@@ -31,6 +33,19 @@ void AAuraPlayerController::PlayerTick(float DeltaTime)
 	CursorTrace();
 
 	AutoRun();
+}
+
+void AAuraPlayerController::ShowDamageNumber_Implementation(float DamageAmount, ACharacter* TargetCharacter, bool bBlockedHit, bool bCriticalHit)
+{
+	if (IsValid(TargetCharacter) && DamageTextComponentClass && IsLocalController()) // IsLocalController: server will not see damage numbers caused by client
+	{
+		UDamageTextComponent* DamageText = NewObject<UDamageTextComponent>(TargetCharacter, DamageTextComponentClass);
+		DamageText->RegisterComponent();
+		DamageText->AttachToComponent(TargetCharacter->GetRootComponent(), FAttachmentTransformRules::KeepRelativeTransform);
+		DamageText->DetachFromComponent(FDetachmentTransformRules::KeepWorldTransform);
+
+		DamageText->SetDamageText(DamageAmount, bBlockedHit, bCriticalHit); 
+	}
 }
 
 void AAuraPlayerController::AutoRun()
@@ -139,14 +154,7 @@ void AAuraPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 		}
 		return;
 	}
-	if (bTargeting)
-	{
-		if (GetASC())
-		{
-			GetASC()->AbilityInputTagReleased(InputTag);
-		}
-	}
-	else
+	if (!bTargeting && !bShiftKeyDown)
 	{
 		const APawn* ControlledPawn = GetPawn();
 		if (FollowTime <= ShortPRessedThreshold && ControlledPawn)
@@ -160,13 +168,15 @@ void AAuraPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 					Spline->AddSplinePoint(PointLoc, ESplineCoordinateSpace::World);
 					//DrawDebugSphere(GetWorld(), PointLoc, 8.f, 8, FColor::Green, false, 5.f);
 				}
-				CachedDestination = NavPath->PathPoints[NavPath->PathPoints.Num() - 1];
-				bAutoRunning = true;
+				if (NavPath->PathPoints.Num() > 0)
+				{
+					CachedDestination = NavPath->PathPoints[NavPath->PathPoints.Num() - 1];
+					bAutoRunning = true;
+				}
 			}
 		}
 		FollowTime = 0.f;
 		bTargeting = false;
-
 	}
 }
 
@@ -182,7 +192,7 @@ void AAuraPlayerController::AbilityInputTagHeld(FGameplayTag InputTag)
 		return;
 	}
 
-	if (bTargeting)
+	if (bTargeting || bShiftKeyDown)
 	{
 		if (GetASC())
 		{
@@ -218,7 +228,6 @@ UAuraAbilitySystemComponent* AAuraPlayerController::GetASC()
 }
 
 
-
 void AAuraPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
@@ -247,6 +256,9 @@ void AAuraPlayerController::SetupInputComponent()
 	UAuraEnhancedInputComponent* AuraEnhancedInputComponent = CastChecked<UAuraEnhancedInputComponent>(InputComponent);
 
 	AuraEnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AAuraPlayerController::Move);
+	AuraEnhancedInputComponent->BindAction(ShiftAction, ETriggerEvent::Started, this, &AAuraPlayerController::ShiftPressed);
+	AuraEnhancedInputComponent->BindAction(ShiftAction, ETriggerEvent::Completed, this, &AAuraPlayerController::ShiftReleased);
+
 	AuraEnhancedInputComponent->BindAbilityActions(InputConfig, this, 
 		&ThisClass::AbilityInputTagPressed, &ThisClass::AbilityInputTagReleased, &ThisClass::AbilityInputTagHeld);
 

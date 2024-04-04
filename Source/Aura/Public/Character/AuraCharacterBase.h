@@ -40,9 +40,20 @@ protected:
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Attributes")
 	TSubclassOf<UGameplayEffect> DefaultSecondaryAttributes;
 
+	/* Dissolve material */
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	TObjectPtr<UMaterialInstance> DissolveMaterialInstance;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	TObjectPtr<UMaterialInstance> WeaponDissolveMaterialInstance;
+
 private:
 	UPROPERTY(EditAnywhere, Category = "Abilities")
 	TArray<TSubclassOf<UGameplayAbility>> StartupAbilities;
+
+	UPROPERTY(EditAnywhere, Category = "Combat")
+	TObjectPtr<UAnimMontage> HitReactMontage;
 
 public:
 	AAuraCharacterBase();
@@ -52,13 +63,30 @@ public:
 
 	virtual FVector GetCombatSoketLocation() const override;
 
+	virtual UAnimMontage* GetHitReactMontage_Implementation() override;
+
+	virtual void Die() override;
+
+	// do it in the server and client
+	UFUNCTION(NetMulticast, Reliable)
+	virtual void MulticastHandeDeath();
+
 protected:  
 	virtual void BeginPlay() override;
 
 	virtual void InitAbilityActorInfo();
 
 	void ApplyEffectToSelf(TSubclassOf<UGameplayEffect> GameplayEffectClass, float Level) const; 
-	void InitializeDefaultAttributes() const;
+	virtual void InitializeDefaultAttributes() const;
 
 	void AddCharacterAbilities();
+
+	void Dissolve();
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void StartDissolveTimeline(UMaterialInstanceDynamic* DynamicMaterialInstance);
+	UFUNCTION(BlueprintImplementableEvent)
+	void StartWeaponDissolveTimeline(UMaterialInstanceDynamic* DynamicMaterialInstance);
+	/* Here you can create timeline from C++, but in this case we created it in blueprints because it's easier.
+	In c++ in can works together with several materials, but in BP u need 1 timeline for each material/ */
 };

@@ -53,7 +53,7 @@ void AAuraCharacter::OnRep_PlayerState()
 {
 	Super::OnRep_PlayerState();
 
-	// Init abiliy actor info for the Client
+	// Init ability actor info for the Client
 	InitAbilityActorInfo();
 }
 

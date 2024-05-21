@@ -122,12 +122,12 @@ void UExecCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecuti
 		Resistance = FMath::Clamp(Resistance, 0, 100.f);
 
 		// Get damage from tag (in our case damage type)
-		float DamageTypeValue = Spec.GetSetByCallerMagnitude(Pair.Key);
+		float DamageTypeValue = Spec.GetSetByCallerMagnitude(Pair.Key, false);
 		DamageTypeValue *= (100.f - Resistance) / 100.f; // Reducing damage
 		Damage += DamageTypeValue;
 	}
 
-	// Capture BlockChance on Target, and determine if there was a successfu Block
+	// Capture BlockChance on Target, and determine if there was a successful Block
 	float TargetBlockChance = 0.f;
 	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(DamageStatics().BlockChanceDef, EvaluationParammeters, TargetBlockChance);
 	TargetBlockChance = FMath::Max<float>(TargetBlockChance, 0.f);

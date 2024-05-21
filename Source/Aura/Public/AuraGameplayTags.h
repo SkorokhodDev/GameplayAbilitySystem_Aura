@@ -53,7 +53,19 @@ public:
 
 	/* Abilities */
 	FGameplayTag Abilities_Attack;
+	FGameplayTag Abilities_Summon;
+	FGameplayTag Abilities_Fire_FireBolt;
 
+	/* Combat Socket*/
+	FGameplayTag CombatSocket_Weapon;
+	FGameplayTag CombatSocket_RightHand;
+	FGameplayTag CombatSocket_LeftHand;
+	FGameplayTag CombatSocket_Tail;
+
+	FGameplayTag Montage_Attack_1;
+	FGameplayTag Montage_Attack_2;
+	FGameplayTag Montage_Attack_3;
+	FGameplayTag Montage_Attack_4;
 
 	TMap<FGameplayTag, FGameplayTag> DamageTypesToResistances;
 	//TArray<FGameplayTag> DamageTypes;

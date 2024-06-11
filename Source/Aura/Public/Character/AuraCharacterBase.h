@@ -1,4 +1,4 @@
-// Copyrights Dream Forge
+ // Copyrights Dream Forge
 
 #pragma once
 
@@ -65,6 +65,9 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat")
 	USoundBase* DeathSound;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Character Class Defaults", meta = (AllowPrivateAccess = true))
+	ECharacterClass CharacterClass = ECharacterClass::Warrior;
+
 	/* Minion Count */
 
 	int32 MinionCount = 0;
@@ -72,6 +75,9 @@ protected:
 private:
 	UPROPERTY(EditAnywhere, Category = "Abilities")
 	TArray<TSubclassOf<UGameplayAbility>> StartupAbilities;
+
+	UPROPERTY(EditAnywhere, Category = "Abilities")
+	TArray<TSubclassOf<UGameplayAbility>> StartupPassiveAbilities;
 
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	TObjectPtr<UAnimMontage> HitReactMontage;
@@ -85,7 +91,7 @@ public:
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	UAttributeSet* GetAttributeSet() const { return AttributeSet; }
 
-	/* Combat Interface */
+	/***** Combat Interface *****/
 	virtual UAnimMontage* GetHitReactMontage_Implementation() override;
 
 	virtual void Die() override;
@@ -102,7 +108,9 @@ public:
 	virtual FTaggedMontage GetTaggedMontageByTag_Implementation(const FGameplayTag& MontageTag) override;
 	virtual int32 GetMinionCount_Implementation() override;
 	virtual void IncrementMinionCount_Implementation(int32 Amount) override;
-	/* End Combat Interface */
+
+	virtual ECharacterClass GetCharacterClass_Implementation() override;
+	/***** End Combat Interface *****/
 
 	bool bDead = false;
 
@@ -127,5 +135,5 @@ protected:
 	UFUNCTION(BlueprintImplementableEvent)
 	void StartWeaponDissolveTimeline(UMaterialInstanceDynamic* DynamicMaterialInstance);
 	/* Here you can create timeline from C++, but in this case we created it in blueprints because it's easier.
-	In c++ in can works together with several materials, but in BP u need 1 timeline for each material/ */
+	In c++ it can works together with several materials, but in BP u need 1 timeline for each material/ */
 };

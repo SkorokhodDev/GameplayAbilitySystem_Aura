@@ -107,13 +107,26 @@ void UAuraAbilitySystemBPLibrary::GiveStartupAbilities(const UObject* WorldConte
 
 	for (auto AbilityClass : DefaultInfo.StartupAbilities)
 	{
-		ICombatInterface* combatInteface = Cast<ICombatInterface>(ASC->GetAvatarActor());
-		if (combatInteface)
+		if (ASC->GetAvatarActor()->Implements<UCombatInterface>())
 		{
-			FGameplayAbilitySpec AbilitySpec = FGameplayAbilitySpec(AbilityClass, combatInteface->GetPlayerLevel());
+			FGameplayAbilitySpec AbilitySpec = FGameplayAbilitySpec(
+				AbilityClass, 
+				ICombatInterface::Execute_GetPlayerLevel(ASC->GetAvatarActor())
+			);
 			ASC->GiveAbility(AbilitySpec);
 		}
 	}
+}
+
+int32 UAuraAbilitySystemBPLibrary::GetXPRewardForClassAndLevel(const UObject* WorldContextObject, ECharacterClass CharacterClass, int32 CharacterLevel)
+{
+	UCharacterClassInfo* CharacterClassInfo = GetCharacterClassInfo(WorldContextObject);
+	if(CharacterClassInfo == nullptr) return 0;
+
+	FCharacterClassDefaultInfo Info = CharacterClassInfo->GetClassDefaultInfo(CharacterClass);
+	const float XPReward = Info.XPReward.GetValueAtLevel(CharacterLevel);
+
+	return static_cast<int32>(XPReward);
 }
 
 UCharacterClassInfo* UAuraAbilitySystemBPLibrary::GetCharacterClassInfo(const UObject* WorldContextObject)
@@ -172,6 +185,8 @@ bool UAuraAbilitySystemBPLibrary::IsCriticalHit(const FGameplayEffectContextHand
 	}
 	return false;
 }
+
+
 
 void UAuraAbilitySystemBPLibrary::SetIsBlockedHit(FGameplayEffectContextHandle& EffectContextHandle, bool bInIsBlockedHit)
 {

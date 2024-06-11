@@ -52,8 +52,7 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Character Class Defaults", meta = (AllowPrivateAccess = true))
 	int32 Level = 1;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Character Class Defaults", meta = (AllowPrivateAccess = true))
-	ECharacterClass CharacterClass = ECharacterClass::Warrior;
+
 
 public:
 	AAuraEnemy();
@@ -68,7 +67,7 @@ public:
 	/* end Enemy Interface */
 	
 	/* Combat Interface*/
-	virtual int32 GetPlayerLevel() override;
+	virtual int32 GetPlayerLevel_Implementation() override;
 	/* end Combat Interface*/
 
 	virtual void Die() override;

@@ -33,6 +33,10 @@ public:
 
 	static FGameplayTag GetAbilityTagFromSpec(const FGameplayAbilitySpec& AbilitySpec);
 	static FGameplayTag GetInputTagFromSpec(const FGameplayAbilitySpec& AbilitySpec);
+
+	void UpgradeAttribute(const FGameplayTag& AttributeTag);
+
+	void ServerUpgradeAttribute(const FGameplayTag& AttributeTag);
 protected:
 
 	void BeginPlay() override;

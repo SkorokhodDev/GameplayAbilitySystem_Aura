@@ -33,6 +33,7 @@ struct FWidgetControllerParams
 	TObjectPtr<UAttributeSet> AttributeSet = nullptr;
 };
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnOverlayPlayerStatChangedSignature, int32, NewValue);
 
 UCLASS()
 class AURA_API UAuraWidgetController : public UObject

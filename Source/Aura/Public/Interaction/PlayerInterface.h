@@ -48,4 +48,10 @@ public:
 
 	UFUNCTION(BlueprintNativeEvent)
 	int32 GetXP() const;
+
+	UFUNCTION(BlueprintNativeEvent)
+	int32 GetAttributePoints() const;
+
+	UFUNCTION(BlueprintNativeEvent)
+	int32 GetSpellPoints() const;
 };

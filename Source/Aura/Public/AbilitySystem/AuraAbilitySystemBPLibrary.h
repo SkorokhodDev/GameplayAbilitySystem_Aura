@@ -45,6 +45,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "AuraAbilitySystemLibrary|Defaults")
 	static UCharacterClassInfo* GetCharacterClassInfo(const UObject* WorldContextObject);
 
+	UFUNCTION(BlueprintCallable, Category = "AuraAbilitySystemLibrary|Defaults")
+	static UAbilityInfo* GetAbilityInfo(const UObject* WorldContextObject);
+
 	UFUNCTION(BlueprintCallable, Category = "FIHAAbilitySystemLibrary|GameplayMechanics")
 	static void GetLivePlayersWithinRadius(const UObject* WorldContextObject, TArray<AActor*>& OutOverlappingActors,
 		const TArray<AActor*> ActrosToIgnore, float Radius, const FVector& SphereOrigin);

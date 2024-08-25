@@ -160,12 +160,57 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 	);
 
 	/*
+	*  Debuffs
+	*/
+
+	GameplayTags.Debuff_Arcane = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Attributes.Debuff.Arcane"),
+		FString("Debuff to Arcane")
+	);
+	GameplayTags.Debuff_Burn = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Attributes.Debuff.Burn"),
+		FString("Debuff to Fire")
+	);
+	GameplayTags.Debuff_Stun = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Attributes.Debuff.Stun"),
+		FString("Debuff Stun to Lighting damage")
+	);
+	GameplayTags.Debuff_Physical = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Attributes.Debuff.Physical"),
+		FString("Debuff to Physical damage")
+	);
+
+	GameplayTags.Debuff_Chance = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Attributes.Debuff.Chance"),
+		FString("Debuff Chance")
+	);
+	GameplayTags.Debuff_Damage = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Attributes.Debuff.Damage"),
+		FString("Debuff Damage")
+	);
+	GameplayTags.Debuff_Duration = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Attributes.Debuff.Duration"),
+		FString("Debuff Duration")
+	);
+	GameplayTags.Debuff_Frequency = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Attributes.Debuff.Frequency"),
+		FString("Debuff Frequency")
+	);
+	/*
 	* Map of Damage Types to Resistances
 	*/
 	GameplayTags.DamageTypesToResistances.Add(GameplayTags.Damage_Arcane, GameplayTags.Attributes_Resistance_Arcane);
 	GameplayTags.DamageTypesToResistances.Add(GameplayTags.Damage_Lighting, GameplayTags.Attributes_Resistance_Lighting);
 	GameplayTags.DamageTypesToResistances.Add(GameplayTags.Damage_Fire, GameplayTags.Attributes_Resistance_Fire);
 	GameplayTags.DamageTypesToResistances.Add(GameplayTags.Damage_Physical, GameplayTags.Attributes_Resistance_Physical);
+
+	/*
+	* Debuffs
+	*/
+	GameplayTags.DamageTypesToDebuffs.Add(GameplayTags.Damage_Arcane, GameplayTags.Debuff_Arcane);
+	GameplayTags.DamageTypesToDebuffs.Add(GameplayTags.Damage_Lighting, GameplayTags.Debuff_Stun);
+	GameplayTags.DamageTypesToDebuffs.Add(GameplayTags.Damage_Fire, GameplayTags.Debuff_Burn);
+	GameplayTags.DamageTypesToDebuffs.Add(GameplayTags.Damage_Physical, GameplayTags.Debuff_Physical);
 
 	/*
 	* Effects

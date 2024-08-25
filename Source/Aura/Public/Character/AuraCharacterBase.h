@@ -14,6 +14,7 @@ class UGameplayEffect;
 class UGameplayAbility;
 class UNiagaraSystem;
 class USoundBase;
+class UDebuffNiagaraComponent;
 
 UCLASS(Abstract)
 class AURA_API AAuraCharacterBase : public ACharacter, public IAbilitySystemInterface, public ICombatInterface
@@ -50,6 +51,9 @@ protected:
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Attributes")
 	TSubclassOf<UGameplayEffect> DefaultSecondaryAttributes;
+
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<UDebuffNiagaraComponent> BurnDebuffComponent;
 
 	/* Dissolve material */
 
@@ -94,7 +98,7 @@ public:
 	/***** Combat Interface *****/
 	virtual UAnimMontage* GetHitReactMontage_Implementation() override;
 
-	virtual void Die() override;
+	virtual void Die(const FVector& DeathImpulse) override;
 
 	virtual FVector GetCombatSocketLocation_Implementation(const FGameplayTag& MontageTag) const override;
 
@@ -110,13 +114,19 @@ public:
 	virtual void IncrementMinionCount_Implementation(int32 Amount) override;
 
 	virtual ECharacterClass GetCharacterClass_Implementation() override;
+
+	FOnASCRegistered OnASCRegistered;
+	virtual FOnASCRegistered GetOnASCRegisteredDelegate() override;
+
+	FOnDeath OnDeath; 
+	virtual FOnDeath GetOnDeathDelegate() override;
 	/***** End Combat Interface *****/
 
 	bool bDead = false;
 
 	// do it in the server and client
 	UFUNCTION(NetMulticast, Reliable)
-	virtual void MulticastHandeDeath();
+	virtual void MulticastHandeDeath(const FVector& DeathImpulse);
 
 protected:  
 	virtual void BeginPlay() override;

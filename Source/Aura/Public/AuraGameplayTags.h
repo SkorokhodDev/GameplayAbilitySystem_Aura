@@ -33,11 +33,6 @@ public:
 
 	FGameplayTag Attributes_Meta_IncomingXP;
 
-	/* Resistances */
-	FGameplayTag Attributes_Resistance_Fire;
-	FGameplayTag Attributes_Resistance_Lighting;
-	FGameplayTag Attributes_Resistance_Arcane;
-	FGameplayTag Attributes_Resistance_Physical;
 	
 	FGameplayTag InputTag_LMB;
 	FGameplayTag InputTag_RMB;
@@ -54,6 +49,23 @@ public:
 	FGameplayTag Damage_Lighting;
 	FGameplayTag Damage_Arcane;
 	FGameplayTag Damage_Physical;
+
+	/* Resistances */
+	FGameplayTag Attributes_Resistance_Fire;
+	FGameplayTag Attributes_Resistance_Lighting;
+	FGameplayTag Attributes_Resistance_Arcane;
+	FGameplayTag Attributes_Resistance_Physical;
+
+	/* Debuffs */
+	FGameplayTag Debuff_Burn;
+	FGameplayTag Debuff_Stun;
+	FGameplayTag Debuff_Arcane;
+	FGameplayTag Debuff_Physical;
+
+	FGameplayTag Debuff_Chance;
+	FGameplayTag Debuff_Damage;
+	FGameplayTag Debuff_Frequency;
+	FGameplayTag Debuff_Duration;
 
 	/* Abilities */
 	FGameplayTag Abilities_None;
@@ -90,6 +102,7 @@ public:
 	FGameplayTag Montage_Attack_4;
 
 	TMap<FGameplayTag, FGameplayTag> DamageTypesToResistances;
+	TMap<FGameplayTag, FGameplayTag> DamageTypesToDebuffs;
 	//TArray<FGameplayTag> DamageTypes;
 
 	FGameplayTag Effects_HitReact;

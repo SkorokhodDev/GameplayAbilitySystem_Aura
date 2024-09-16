@@ -58,6 +58,12 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "FIHAAbilitySystemLibrary|DamageEffect")
 	static FGameplayEffectContextHandle ApplyDamageEffect(const FDamageEffectParams& DamageEffectParams);
+	
+	UFUNCTION(BlueprintPure, Category = "FIHAAbilitySystemLibrary|GameplayMechanics")
+	static TArray<FRotator> EvenlySpacedRotators(const FVector& Forward, const FVector& Axis, const float SpreadAngle, int32 NumRotators);
+
+	UFUNCTION(BlueprintPure, Category = "FIHAAbilitySystemLibrary|GameplayMechanics")
+	static TArray<FVector> EvenlyRotatedVectors(const FVector& Forward, const FVector& Axis, const float SpreadAngle, int32 NumVectors);
 
 	/* Effect Context Handle*/
 	UFUNCTION(BlueprintPure, Category = "AuraAbilitySystemLibrary|GameplayEffects")

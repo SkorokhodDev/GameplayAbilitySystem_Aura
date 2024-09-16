@@ -92,4 +92,7 @@ public:
 	virtual FOnDeath GetOnDeathDelegate() = 0;
 
 	virtual FOnASCRegistered GetOnASCRegisteredDelegate() = 0;
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void SetInShockLoop(bool bInLoop);
 };

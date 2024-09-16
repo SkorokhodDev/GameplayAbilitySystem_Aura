@@ -9,6 +9,7 @@
 #include "Components/SplineComponent.h"
 #include <NavigationSystem.h>
 #include <NavigationPath.h>
+#include <NiagaraFunctionLibrary.h>
 // Aura
 #include "Input/AuraEnhancedInputComponent.h"
 #include <AbilitySystemBlueprintLibrary.h>
@@ -142,6 +143,7 @@ void AAuraPlayerController::AbilityInputTagPressed(FGameplayTag InputTag)
 		bTargeting = CurrentActor ? true : false;
 		bAutoRunning = false;
 	}
+	if (GetASC()) GetASC()->AbilityInputTagPressed(InputTag);
 }
 
 void AAuraPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
@@ -154,6 +156,9 @@ void AAuraPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 		}
 		return;
 	}
+
+	if (GetASC()) GetASC()->AbilityInputTagReleased(InputTag);
+
 	if (!bTargeting && !bShiftKeyDown)
 	{
 		const APawn* ControlledPawn = GetPawn();
@@ -174,6 +179,7 @@ void AAuraPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 					bAutoRunning = true;
 				}
 			}
+			UNiagaraFunctionLibrary::SpawnSystemAtLocation(this, ClickNiagaraSystem, CachedDestination);
 		}
 		FollowTime = 0.f;
 		bTargeting = false;

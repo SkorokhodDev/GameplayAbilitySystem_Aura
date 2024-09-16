@@ -106,6 +106,7 @@ void AAuraEnemy::HitReactTagChanged(const FGameplayTag CallbackTag, int32 NewCou
 void AAuraEnemy::BeginPlay()
 {
 	Super::BeginPlay();
+
 	GetCharacterMovement()->MaxWalkSpeed = BaseWalkSpeed;
 	InitAbilityActorInfo();
 	

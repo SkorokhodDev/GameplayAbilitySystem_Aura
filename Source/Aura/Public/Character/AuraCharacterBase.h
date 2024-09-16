@@ -140,8 +140,6 @@ public:
 	virtual void MulticastHandeDeath(const FVector& DeathImpulse);
 
 protected:  
-	virtual void BeginPlay() override;
-
 	virtual void InitAbilityActorInfo();
 
 	void ApplyEffectToSelf(TSubclassOf<UGameplayEffect> GameplayEffectClass, float Level) const; 

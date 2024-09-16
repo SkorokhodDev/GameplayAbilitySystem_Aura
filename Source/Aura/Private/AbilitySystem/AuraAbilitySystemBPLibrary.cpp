@@ -228,6 +228,50 @@ FGameplayEffectContextHandle UAuraAbilitySystemBPLibrary::ApplyDamageEffect(
 	return EffectContextHandle;
 }
 
+TArray<FRotator> UAuraAbilitySystemBPLibrary::EvenlySpacedRotators(const FVector& Forward, const FVector& Axis, const float SpreadAngle, int32 NumRotators)
+{
+	TArray<FRotator> Rotators;
+
+	const FVector LeftOfSpread = Forward.RotateAngleAxis(-SpreadAngle / 2.f, Axis);
+	if (NumRotators > 1)
+	{
+		const float DeltaSpread = SpreadAngle / (NumRotators - 1);
+		for (int32 i = 0; i < NumRotators; i++)
+		{
+			const FVector Direction = LeftOfSpread.RotateAngleAxis(DeltaSpread * i, FVector::UpVector);
+			Rotators.Add(Direction.Rotation());
+		}
+	}
+	else
+	{
+		Rotators.Add(Forward.Rotation());
+	}
+
+	return Rotators;
+}
+
+TArray<FVector> UAuraAbilitySystemBPLibrary::EvenlyRotatedVectors(const FVector& Forward, const FVector& Axis, const float SpreadAngle, int32 NumVectors)
+{
+	TArray<FVector> Vectors;
+
+	const FVector LeftOfSpread = Forward.RotateAngleAxis(-SpreadAngle / 2.f, Axis);
+	if (NumVectors > 1)
+	{
+		const float DeltaSpread = SpreadAngle / (NumVectors - 1);
+		for (int32 i = 0; i < NumVectors; i++)
+		{
+			const FVector Direction = LeftOfSpread.RotateAngleAxis(DeltaSpread * i, FVector::UpVector);
+			Vectors.Add(Direction);
+		}
+	}
+	else
+	{
+		Vectors.Add(Forward);
+	}
+
+	return Vectors;
+}
+
 bool UAuraAbilitySystemBPLibrary::IsBlockedHit(const FGameplayEffectContextHandle& EffectContextHandle)
 {
 	if (const FAuraGameplayEffectContext* AuraContext = static_cast<const FAuraGameplayEffectContext*>(EffectContextHandle.Get()))

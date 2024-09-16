@@ -92,11 +92,6 @@ bool AAuraCharacterBase::IsDead_Implementation() const
 }
 
 
-void AAuraCharacterBase::BeginPlay()
-{
-	Super::BeginPlay();
-	
-}
 
 UAnimMontage* AAuraCharacterBase::GetHitReactMontage_Implementation()
 {

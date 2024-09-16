@@ -15,6 +15,7 @@ struct FGameplayTag;
 class UAuraAbilitySystemComponent;
 class UDamageTextComponent;
 class ACharacter;
+class UNiagaraSystem;
 
 UCLASS()
 class AURA_API AAuraPlayerController : public APlayerController
@@ -56,6 +57,9 @@ private:
 
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<class USplineComponent> Spline;
+
+	UPROPERTY(EditDefaultsOnly)
+	TObjectPtr<UNiagaraSystem> ClickNiagaraSystem;
 
 	bool bShiftKeyDown = false;
 

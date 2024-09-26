@@ -57,6 +57,9 @@ public:
 	void CauseDamage(AActor* TargetActor);
 
 	UFUNCTION(BlueprintPure)
+	float GetDamageAtLevel() const;
+
+	UFUNCTION(BlueprintPure)
 	FDamageEffectParams MakeDamageEffectParamsFormClassDefaults(AActor* TargetActor = nullptr) const;
 
 	UFUNCTION(BlueprintPure)

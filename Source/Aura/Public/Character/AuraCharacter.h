@@ -50,10 +50,15 @@ public:
 	/* Combat Interface */
 	virtual int32 GetPlayerLevel_Implementation() override;
 	/* end Combat Interface */
+	
+	virtual void OnRep_Stunned() override;
+	virtual void OnRep_Burned() override;
 
 private:
 	virtual void InitAbilityActorInfo() override;
 
 	UFUNCTION(NetMulticast, Reliable)
 	void MulticastLevelUpParticles() const;
+
+
 };

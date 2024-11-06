@@ -133,7 +133,7 @@ void UAuraAbilitySystemComponent::AbilityInputTagPressed(const FGameplayTag& Inp
 			AbilitySpecInputPressed(AbilitySpec);
 			if (!AbilitySpec.IsActive())
 			{
-				TryActivateAbility(AbilitySpec.Handle);
+				//TryActivateAbility(AbilitySpec.Handle);
 				InvokeReplicatedEvent(
 					EAbilityGenericReplicatedEvent::InputPressed,
 					AbilitySpec.Handle,

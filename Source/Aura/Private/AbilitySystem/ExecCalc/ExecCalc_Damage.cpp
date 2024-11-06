@@ -149,6 +149,7 @@ void UExecCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecuti
 	}
 
 	const FGameplayEffectSpec& Spec = ExecutionParams.GetOwningSpec(); 
+	FGameplayEffectContextHandle EffectContextHandle = Spec.GetContext();
 	
 	const FGameplayTagContainer* SourceTags = Spec.CapturedSourceTags.GetAggregatedTags();
 	const FGameplayTagContainer* TargetTags = Spec.CapturedTargetTags.GetAggregatedTags();
@@ -180,8 +181,14 @@ void UExecCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecuti
 
 		// Get damage from tag (in our case damage type)
 		float DamageTypeValue = Spec.GetSetByCallerMagnitude(Pair.Key, false);
+
 		DamageTypeValue *= (100.f - Resistance) / 100.f; // Reducing damage
+
+		//if(UAuraAbilitySystemBPLibrary::)
+
 		Damage += DamageTypeValue;
+
+
 	}
 
 	// Capture BlockChance on Target, and determine if there was a successful Block
@@ -191,7 +198,6 @@ void UExecCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecuti
 
 	const bool bBlocked = FMath::RandRange(1, 100) < TargetBlockChance;
 
-	FGameplayEffectContextHandle EffectContextHandle = Spec.GetContext();
 	UAuraAbilitySystemBPLibrary::SetIsBlockedHit(EffectContextHandle, bBlocked);
 
 	// If Block, halve the damage

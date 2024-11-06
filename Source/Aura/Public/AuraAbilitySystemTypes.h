@@ -61,6 +61,19 @@ struct FDamageEffectParams
 
 	UPROPERTY(BlueprintReadWrite)
 	FVector KnockbackForce = FVector::ZeroVector;
+
+	// Radial Damage 
+	UPROPERTY(BlueprintReadWrite)
+	bool bIsRadialDamage = false;
+
+	UPROPERTY(BlueprintReadWrite)
+	float RadialDamageInnerRadius = 0.f;
+
+	UPROPERTY(BlueprintReadWrite)
+	float RadialDamageOuterRadius = 0.f;
+
+	UPROPERTY(BlueprintReadWrite)
+	FVector RadialDamageOrigin = FVector::ZeroVector;
 };
 
 USTRUCT(BlueprintType)
@@ -78,6 +91,11 @@ public:
 	TSharedPtr<FGameplayTag> GetDamageType() const {return DamageType; }
 	FVector GetDeathImpulse() const { return DeathImpulse; }
 	FVector GetKnockbackForce() const { return KnockbackForce; }
+	// Radial Damage
+	bool IsRadialDamage() const { return bIsRadialDamage; }
+	float GetRadialDamageInnerRadius() const { return RadialDamageInnerRadius; }
+	float GetRadialDamageOuterRadius() const { return RadialDamageOuterRadius; }
+	FVector GetRadialDamageOrigin() const { return RadialDamageOrigin; }
 
 	void SetIsBlockedHit(bool bInIsBlockedHit) {
 		bIsBlockedHit = bInIsBlockedHit;
@@ -113,6 +131,11 @@ public:
 	{
 		KnockbackForce = InForce;
 	}
+	// Radial Damage
+	void SetIsRadialDamage(bool bInIsRadialDamage) { bIsRadialDamage = bInIsRadialDamage; }
+	void SetRadialDamageInnerRadius(float InRadius) { RadialDamageInnerRadius = InRadius; }
+	void SetRadialDamageOuterRadius(float InRadius) { RadialDamageOuterRadius = InRadius; }
+	void SetRadialDamageOrigin(FVector InRadialDamageOrigin) { RadialDamageOrigin = InRadialDamageOrigin; }
 
 
 	/** Returns the actual struct used for serialization, subclasses must override this! */
@@ -164,6 +187,17 @@ public:
 	UPROPERTY()
 	FVector KnockbackForce = FVector::ZeroVector;
 
+	UPROPERTY()
+	bool bIsRadialDamage = false;
+
+	UPROPERTY()
+	float RadialDamageInnerRadius = 0.f;
+
+	UPROPERTY()
+	float RadialDamageOuterRadius = 0.f;
+
+	UPROPERTY()
+	FVector RadialDamageOrigin = FVector::ZeroVector;
 };
 
 // important struct for our custom GameplayEffectContext

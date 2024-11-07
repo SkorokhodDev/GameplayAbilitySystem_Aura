@@ -131,10 +131,13 @@ public:
 
 	virtual void Tick(float DeltaTime) override;
 
+	FOnDamageSignature OnDamageDelegate;
+	virtual float TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
+
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	UAttributeSet* GetAttributeSet() const { return AttributeSet; }
 
-	/***** Combat Interface *****/
+	/********** Combat Interface **********/
 	virtual UAnimMontage* GetHitReactMontage_Implementation() override;
 
 	virtual void Die(const FVector& DeathImpulse) override;
@@ -160,11 +163,13 @@ public:
 	FOnDeath OnDeath; 
 	virtual FOnDeath& GetOnDeathDelegate() override;
 
+	virtual FOnDamageSignature& GetOnDamageSignature() override;
+
 	virtual USkeletalMeshComponent* GetWeapon_Implementation() override;
 
 	virtual void SetIsBeingShocked_Implementation(bool bInShock) override;
 	virtual bool IsBeingShocked_Implementation() override; // add const
-	/***** End Combat Interface *****/
+	/********** End Combat Interface **********/
 
 	virtual void StunTagChanged(const FGameplayTag CallbackTag, int32 NewCount);
 

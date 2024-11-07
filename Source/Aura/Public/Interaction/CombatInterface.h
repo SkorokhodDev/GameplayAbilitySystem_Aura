@@ -15,6 +15,7 @@ class AActor;
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnASCRegistered, UAbilitySystemComponent*);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnDeath, AActor*, DeadActor);
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnDamageSignature, float /*DamageAmount*/);
 
 //DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnDeathSignature, AActor*, DeadActor);
 
@@ -94,6 +95,8 @@ public:
 	virtual FOnDeath& GetOnDeathDelegate() = 0;
 
 	virtual FOnASCRegistered& GetOnASCRegisteredDelegate() = 0;
+
+	virtual FOnDamageSignature& GetOnDamageSignature() = 0; // Forward declaration
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void SetInShockLoop(bool bInLoop);

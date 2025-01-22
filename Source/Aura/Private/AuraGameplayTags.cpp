@@ -114,7 +114,7 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 		FName("InputTag.Passive.2"),
 		FString("Input Tag for Passive Spell 2")
 	);
-
+	 
 	/*
 	*  Damage Types
 	*/
@@ -238,6 +238,10 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 		FName("Abilities.Fire.FireBolt"),
 		FString("Fire Bolt Ability Tag")
 	);
+	GameplayTags.Abilities_Fire_FireBlast = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Abilities.Fire.FireBlast"),
+		FString("Fire Ability Tag")
+	);
 	GameplayTags.Abilities_Lightning_Electrocute = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName("Abilities.Lightning.Electrocute"),
 		FString("Electrocute Ability Tag")
@@ -352,5 +356,12 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 	GameplayTags.Player_Block_InputReleased = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName("Player.Block.InputReleased"),
 		FString("Block input released callback.")
+	);
+
+
+	/* Gameplay Cues*/
+	GameplayTags.GameplayCue_FireBlast = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("GameplayCue.FireBlast"),
+		FString("Fire Blast Gameplay Cue.")
 	);
 }

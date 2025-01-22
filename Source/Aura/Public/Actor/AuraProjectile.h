@@ -27,11 +27,12 @@ public:
 	TObjectPtr<USceneComponent> HomingTargetSceneComponent;
 protected:
 
+	bool bHit = false;
+
 private:
 	UPROPERTY(EditDefaultsOnly)
 	float LifeSpan = 15.f;
 
-	bool bHit = false;
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<USphereComponent> Sphere;
 
@@ -44,6 +45,7 @@ private:
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<USoundBase> LoopingSound;
 
+protected:
 	UPROPERTY()
 	TObjectPtr<UAudioComponent> LoopingSoundComponent;
 
@@ -55,12 +57,17 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
-	void OnHit();
+
+	UFUNCTION(BlueprintCallable)
+	virtual void OnHit();
+
 	virtual void Destroyed() override;
+
+	bool IsValidOverlap(AActor* OtherActor) const;
 	
 
 	UFUNCTION()
-	void OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+	virtual void OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 		UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 };

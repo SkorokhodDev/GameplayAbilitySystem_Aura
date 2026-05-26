@@ -1,4 +1,4 @@
-// Copyrights Skorokhod.
+ // Copyrights Skorokhod.
 
 #pragma once
 

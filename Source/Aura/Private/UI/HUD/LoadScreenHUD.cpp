@@ -18,4 +18,5 @@ void ALoadScreenHUD::BeginPlay()
 	LoadScreenWidget->AddToViewport();
 	LoadScreenWidget->BlueprintInitialzieWidget(); // to init our load slot widgets later
 	
+	LoadScreenViewModel->LoadData();
 }
